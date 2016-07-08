@@ -2,6 +2,7 @@ use v6.c;
 use Test;
 use Semaphore::ReadersWriters;
 
+#`{{
 #-------------------------------------------------------------------------------
 subtest {
   my Semaphore::ReadersWriters $rw .= new;
@@ -74,6 +75,8 @@ subtest {
 
 }, 'only writers';
 
+}}
+
 #-------------------------------------------------------------------------------
 subtest {
   my Semaphore::ReadersWriters $rw .= new;
@@ -81,7 +84,7 @@ subtest {
   my $shared-var = 10;
 
   my @p;
-  for (^3).pick(10) {
+  for (^100).pick(100) {
     my $i = $_;
 
     @p.push: Promise.start( {
@@ -90,24 +93,30 @@ subtest {
 
         # Only when $i <= 2 then thread becomes a writer.
         # All others become readers
-        if $i <= 2 {
-          diag "Try writing $i";
+        if $i <= 40 {
           $r = $rw.writer( 'shv', {$shared-var += $i});
-          diag "Written $r";
         }
 
         else {
-          diag "Try reading $i";
           $r = $rw.reader( 'shv', {$shared-var});
-          diag "Read $r";
         }
 
+        CATCH {
+          default {
+            .say;
+            $r = -1;
+          }
+        }
+
+#        $i.fmt('%03d') ~ ', ' ~ $r.fmt('%04d');
+#        $r.fmt('%04d');
         $r;
       }
     );
   }
   
-  pass "Result {.result}" for @p;
+  pass "Result {.result} " for @p;
+#  .result for @p;
   pass "All threads have ended, no hangups";
 
 }, 'readers and writers';
