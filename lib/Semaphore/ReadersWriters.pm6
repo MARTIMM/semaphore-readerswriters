@@ -13,7 +13,7 @@
   say 'Shared var is ', $rw.reader( 'shv', {$shared-var;});
 }}
 
-class Semaphore::ReadersWriters:ver<0.1.0>:auth<git@github.com:MARTIMM> {
+class Semaphore::ReadersWriters:ver<0.2.0>:auth<MARTIMM> {
 
   # Using state instead of has or my will have a scope over all
   # objects of this class, state will also be initialized only
@@ -29,7 +29,7 @@ class Semaphore::ReadersWriters:ver<0.1.0>:auth<git@github.com:MARTIMM> {
   constant C-WRITERS-LOCK                       = 5; # block writers
   constant C-WRITERS-COUNT                      = 6; # writer count
 
-  subset RWPatternType of Int where 1 <= $_ <= 3;
+  subset RWPatternType of Int is export where 1 <= $_ <= 3;
   constant C-RW-READERPRIO is export            = 1;
   constant C-RW-NOWRITERSTARVE is export        = 2;
   constant C-RW-WRITERPRIO is export            = 3;
@@ -42,7 +42,7 @@ class Semaphore::ReadersWriters:ver<0.1.0>:auth<git@github.com:MARTIMM> {
 
     $s-mutex.acquire;
     for @snames -> $sname {
-    
+
       # Make an array of each entry. [0] is a readers semaphore with a readers
       # counter([1]). Second pair is for writers at [2] and [3].
       $semaphores{$sname} = [
@@ -140,7 +140,7 @@ say "{$is-reader ?? 'R' !! 'W'} lock";
         if ++$semaphores{$sname}[C-READERS-COUNT] == 1;
       $semaphores{$sname}[C-READSTRUCT-LOCK].release;
     }
-    
+
     else {
       $semaphores{$sname}[C-WRITESTRUCT-LOCK].acquire;
       $semaphores{$sname}[C-WRITERS-LOCK].acquire
@@ -160,7 +160,7 @@ say "{$is-reader ?? 'R' !! 'W'} unlock";
         if --$semaphores{$sname}[C-READERS-COUNT] == 0;
       $semaphores{$sname}[C-READSTRUCT-LOCK].release;
     }
-    
+
     else {
       $semaphores{$sname}[C-WRITESTRUCT-LOCK].acquire;
       $semaphores{$sname}[C-WRITERS-LOCK].release

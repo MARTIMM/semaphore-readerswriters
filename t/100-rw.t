@@ -2,7 +2,7 @@ use v6.c;
 use Test;
 use Semaphore::ReadersWriters;
 
-#`{{
+#`{{}}
 #-------------------------------------------------------------------------------
 subtest {
   my Semaphore::ReadersWriters $rw .= new;
@@ -75,7 +75,6 @@ subtest {
 
 }, 'only writers';
 
-}}
 
 #-------------------------------------------------------------------------------
 subtest {
@@ -84,7 +83,7 @@ subtest {
   my $shared-var = 10;
 
   my @p;
-  for (^100).pick(100) {
+  for (^40).pick(40) {
     my $i = $_;
 
     @p.push: Promise.start( {
@@ -93,7 +92,7 @@ subtest {
 
         # Only when $i <= 2 then thread becomes a writer.
         # All others become readers
-        if $i <= 40 {
+        if $i <= 15 {
           $r = $rw.writer( 'shv', {$shared-var += $i});
         }
 
