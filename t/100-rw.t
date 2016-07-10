@@ -93,10 +93,12 @@ subtest {
         # Only when $i <= 2 then thread becomes a writer.
         # All others become readers
         if $i <= 15 {
+          diag "Try writing $i";
           $r = $rw.writer( 'shv', {$shared-var += $i});
         }
 
         else {
+          diag "Try reading $i";
           $r = $rw.reader( 'shv', {$shared-var});
         }
 

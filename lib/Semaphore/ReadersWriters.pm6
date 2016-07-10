@@ -13,7 +13,7 @@
   say 'Shared var is ', $rw.reader( 'shv', {$shared-var;});
 }}
 
-class Semaphore::ReadersWriters:ver<0.2.0>:auth<MARTIMM> {
+class Semaphore::ReadersWriters:ver<0.2.1>:auth<MARTIMM> {
 
   # Using state instead of has or my will have a scope over all
   # objects of this class, state will also be initialized only
@@ -83,18 +83,18 @@ class Semaphore::ReadersWriters:ver<0.2.0>:auth<MARTIMM> {
     $s-mutex.release;
     return fail("mutex name '$sname' does not exist") unless $has-key;
 
-say "R hold ws";
+#say "R hold ws";
     # if writers are busy then wait,
     $semaphores{$sname}[C-WRITERS-LOCK].acquire;
-say "R hold ws continue";
+#say "R hold ws continue";
 
     self!lock( $sname, :is-reader);
 
-say "R release ws";
+#say "R release ws";
     # signal writers queue
     $semaphores{$sname}[C-WRITERS-LOCK].release;
 
-say "R run code";
+#say "R run code";
     my $r = &$code();
 
     self!unlock( $sname, :is-reader);
@@ -113,15 +113,15 @@ say "R run code";
 
     self!lock( $sname, :!is-reader);
 
-say "W block writers";
+#say "W block writers";
     # Block other writers
     $semaphores{$sname}[C-READERS-LOCK].acquire;
-say "W block writers continue";
+#say "W block writers continue";
 
-say "W run code";
+#say "W run code";
     my $r = &$code();
 
-say "W accept other writers";
+#say "W accept other writers";
     $semaphores{$sname}[C-READERS-LOCK].release;
 
     self!unlock( $sname, :!is-reader);
@@ -132,7 +132,7 @@ say "W accept other writers";
   #-----------------------------------------------------------------------------
   method !lock ( Str:D $sname, Bool:D :$is-reader ) {
 
-say "{$is-reader ?? 'R' !! 'W'} lock";
+#say "{$is-reader ?? 'R' !! 'W'} lock";
     # hold if this is the first writer
     if $is-reader {
       $semaphores{$sname}[C-READSTRUCT-LOCK].acquire;
@@ -147,13 +147,13 @@ say "{$is-reader ?? 'R' !! 'W'} lock";
         if ++$semaphores{$sname}[C-WRITERS-COUNT] == 1;
       $semaphores{$sname}[C-WRITESTRUCT-LOCK].release;
     }
-say "{$is-reader ?? 'R' !! 'W'} release";
+#say "{$is-reader ?? 'R' !! 'W'} release";
   }
 
   #-----------------------------------------------------------------------------
   method !unlock ( Str:D $sname, Bool:D :$is-reader ) {
 
-say "{$is-reader ?? 'R' !! 'W'} unlock";
+#say "{$is-reader ?? 'R' !! 'W'} unlock";
     if $is-reader {
       $semaphores{$sname}[C-READSTRUCT-LOCK].acquire;
       $semaphores{$sname}[C-READERS-LOCK].release
@@ -167,7 +167,7 @@ say "{$is-reader ?? 'R' !! 'W'} unlock";
         if --$semaphores{$sname}[C-WRITERS-COUNT] == 0;
       $semaphores{$sname}[C-WRITESTRUCT-LOCK].release;
     }
-say "{$is-reader ?? 'R' !! 'W'} unlocked";
+#say "{$is-reader ?? 'R' !! 'W'} unlocked";
   }
 }
 

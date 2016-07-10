@@ -24,6 +24,8 @@ say 'Shared var is ', $rw.reader( 'shv', {$shared-var;});
 
 See [semantic versioning](http://semver.org/). Please note point 4. on that page: *Major version zero (0.y.z) is for initial development. Anything may change at any time. The public API should not be considered stable.*
 
+* 0.2.1
+  * Removed debugging texts to publish class
 * 0.2.0
   * Documentation
   * Bugfixes, hangups caused by overuse of same semaphores. Added more semaphores per critical section.
