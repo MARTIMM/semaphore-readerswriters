@@ -18,12 +18,18 @@ $rw.writer( 'shv', {$shared-var += 2});
 say 'Shared var is ', $rw.reader( 'shv', {$shared-var;});
 ```
 
-## NOTE
+## TODO
+
+* Implement other variants of this pattern.
+  * Readers priority variant
+  * No writer starvation variant
 
 ## CHANGELOG
 
 See [semantic versioning](http://semver.org/). Please note point 4. on that page: *Major version zero (0.y.z) is for initial development. Anything may change at any time. The public API should not be considered stable.*
 
+* 0.2.2
+  * Added $.debug to show messages about the actions. This will be deprecated later when I am confident enough that everything works well enaugh.
 * 0.2.1
   * Removed debugging texts to publish class
 * 0.2.0

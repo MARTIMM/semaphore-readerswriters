@@ -2,10 +2,12 @@ use v6.c;
 use Test;
 use Semaphore::ReadersWriters;
 
-#`{{}}
+my Bool $debug = False;
+
 #-------------------------------------------------------------------------------
 subtest {
   my Semaphore::ReadersWriters $rw .= new;
+  $rw.debug = $debug;
   my $shared-var = 10;
 
   isa-ok $rw, 'Semaphore::ReadersWriters';
@@ -34,6 +36,7 @@ subtest {
 #-------------------------------------------------------------------------------
 subtest {
   my Semaphore::ReadersWriters $rw .= new;
+  $rw.debug = $debug;
   $rw.add-mutex-names('shv');
   my $shared-var = 10;
 
@@ -42,7 +45,7 @@ subtest {
     my $i = $_;
 
     @p.push: Promise.start( {
-        diag "Try reading $i";
+say "$*THREAD.id() Try reading $i" if $debug;
         $rw.reader( 'shv', { sleep((rand * 2).Int); $shared-var;});
       }
     );
@@ -56,6 +59,7 @@ subtest {
 #-------------------------------------------------------------------------------
 subtest {
   my Semaphore::ReadersWriters $rw .= new;
+  $rw.debug = $debug;
   $rw.add-mutex-names('shv');
   my $shared-var = 10;
 
@@ -64,7 +68,7 @@ subtest {
     my $i = $_;
 
     @p.push: Promise.start( {
-        diag "Try writing $i";
+say "$*THREAD.id() Try writing $i" if $debug;
         $rw.writer( 'shv', { sleep((rand * 2).Int); ++$shared-var;});
       }
     );
@@ -75,15 +79,16 @@ subtest {
 
 }, 'only writers';
 
-
 #-------------------------------------------------------------------------------
 subtest {
   my Semaphore::ReadersWriters $rw .= new;
+$debug = True;
+  $rw.debug = $debug;
   $rw.add-mutex-names('shv');
   my $shared-var = 10;
 
   my @p;
-  for (^40).pick(40) {
+  for (^10).pick(30) {
     my $i = $_;
 
     @p.push: Promise.start( {
@@ -92,13 +97,13 @@ subtest {
 
         # Only when $i <= 2 then thread becomes a writer.
         # All others become readers
-        if $i <= 15 {
-          diag "Try writing $i";
+        if $i <= 2 {
+say "$*THREAD.id() Try writing $i" if $debug;
           $r = $rw.writer( 'shv', {$shared-var += $i});
         }
 
         else {
-          diag "Try reading $i";
+say "$*THREAD.id() Try reading $i" if $debug;
           $r = $rw.reader( 'shv', {$shared-var});
         }
 
@@ -115,7 +120,7 @@ subtest {
       }
     );
   }
-  
+
   pass "Result {.result} " for @p;
 #  .result for @p;
   pass "All threads have ended, no hangups";
