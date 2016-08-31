@@ -117,13 +117,13 @@ Defined as
 Return all defined names.
 
 
-=head2 check-mutex-name
+=head2 check-mutex-names
 
 Defined as
 
-  method check-mutex-name ( Str:D $name --> Bool )
+  method check-mutex-names ( *@names --> Bool )
 
-Check if a name is in use. Returns C<True> if so, C<False> otherwise.
+Check if a name from @names is in use. Returns C<True> if so, C<False> otherwise.
 
 
 =head2 reader
