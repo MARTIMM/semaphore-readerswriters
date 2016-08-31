@@ -117,6 +117,15 @@ Defined as
 Return all defined names.
 
 
+=head2 check-mutex-name
+
+Defined as
+
+  method check-mutex-name ( Str:D $name --> Bool )
+
+Check if a name is in use. Returns C<True> if so, C<False> otherwise.
+
+
 =head2 reader
 
 Defined as

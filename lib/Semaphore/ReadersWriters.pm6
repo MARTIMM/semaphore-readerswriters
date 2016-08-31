@@ -93,6 +93,16 @@ class Semaphore::ReadersWriters:ver<0.2.2>:auth<MARTIMM> {
   }
 
   #-----------------------------------------------------------------------------
+  method check-mutex-name ( Str:D $name --> Bool ) {
+
+    $s-mutex.acquire;
+    my Bool $in-use = $semaphores{$name}:exists and $semaphores{$name}.defined;
+    $s-mutex.release;
+
+    return $in-use;
+  }
+
+  #-----------------------------------------------------------------------------
   method reader ( Str:D $sname, Block:D $code --> Any ) {
 
     # Check if structure of key is defined
@@ -195,5 +205,3 @@ say "$*THREAD.id() W $sname unlock" if $!debug;
 say "$*THREAD.id() W $sname unlocked" if $!debug;
   }
 }
-
-

@@ -16,6 +16,9 @@ subtest {
   cmp-ok 'shv', '~~', any($rw.get-mutex-names), 'shv key set';
   cmp-ok 'def', '~~', any($rw.get-mutex-names), 'def key set';
 
+  ok $rw.check-mutex-name('def'), 'Key def found';
+  ok !$rw.check-mutex-name('xyz'), 'Key xyz not found';
+
   $rw.rm-mutex-names('def');
   cmp-ok 'def', '!~~', any($rw.get-mutex-names), 'def key removed';
 
@@ -60,7 +63,7 @@ subtest {
 subtest {
   my Semaphore::ReadersWriters $rw .= new;
   $rw.debug = $debug;
-  
+
   try {
     $rw.add-mutex-names('shv');
     CATCH {
