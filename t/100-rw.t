@@ -16,8 +16,9 @@ subtest {
   cmp-ok 'shv', '~~', any($rw.get-mutex-names), 'shv key set';
   cmp-ok 'def', '~~', any($rw.get-mutex-names), 'def key set';
 
-  ok $rw.check-mutex-name('def'), 'Key def found';
-  ok !$rw.check-mutex-name('xyz'), 'Key xyz not found';
+  ok $rw.check-mutex-names('def'), 'Key def found';
+  ok !$rw.check-mutex-names('xyz'), 'Key xyz not found';
+  ok $rw.check-mutex-names(<def xyz>), 'any of def or xyz is found';
 
   $rw.rm-mutex-names('def');
   cmp-ok 'def', '!~~', any($rw.get-mutex-names), 'def key removed';

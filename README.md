@@ -29,8 +29,10 @@ say 'Shared var is ', $rw.reader( 'shv', {$shared-var;});
 
 See [semantic versioning](http://semver.org/). Please note point 4. on that page: *Major version zero (0.y.z) is for initial development. Anything may change at any time. The public API should not be considered stable.*
 
-*.0.2.4
-  Added convenience method check-mutex-name(). 
+* 0.2.5
+  Changed last method into check-mutex-names() to test for more than one name.
+* 0.2.4
+  Added convenience method check-mutex-name().
 * 0.2.3
   * add-mutex-names throws an exception when keys are reused
 * 0.2.2

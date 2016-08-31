@@ -93,10 +93,14 @@ class Semaphore::ReadersWriters:ver<0.2.2>:auth<MARTIMM> {
   }
 
   #-----------------------------------------------------------------------------
-  method check-mutex-name ( Str:D $name --> Bool ) {
+  method check-mutex-names ( *@names --> Bool ) {
 
     $s-mutex.acquire;
-    my Bool $in-use = $semaphores{$name}:exists and $semaphores{$name}.defined;
+    my Bool $in-use;
+    for @names -> $name {
+      $in-use = $semaphores{$name}:exists and $semaphores{$name}.defined;
+      last if $in-use;
+    }
     $s-mutex.release;
 
     return $in-use;
