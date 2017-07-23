@@ -23,8 +23,8 @@ say 'Shared var is ', $rw.reader( 'shv', {$shared-var;});
 
 The Markdown files in this package uses the atom plugin **Markdown Preview Enhanced**. E.g. the synopsis can be run by placing the cursor in the code and type `shift-enter' or, if not possible, look for the readme pdf in doc)
 
-* [README pdf](https://github.com/MARTIMM/semaphore-readerswriters/blob/master/doc/ReadersWriters.pdf)
-* [ReadersWriters pdf](https://github.com/MARTIMM/semaphore-readerswriters/blob/master/doc/README.pdf)
+* [README pdf](https://github.com/MARTIMM/semaphore-readerswriters/blob/master/doc/README.pdf)
+* [ReadersWriters pdf](https://github.com/MARTIMM/semaphore-readerswriters/blob/master/doc/ReadersWriters.pdf)
 
 ## TODO
 
