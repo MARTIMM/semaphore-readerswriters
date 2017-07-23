@@ -3,8 +3,9 @@
   "authors": [
     "Marcel Timmerman"
   ],
-  "depends": [
-  ],
+  "depends": [ ],
+  "test-depends": [ "Test::META" ],
+  "build-depends": [ ],
   "description": "Semaphore Readers Writers Pattern",
   "license": "Artistic-2.0",
   "name": "Semaphore::ReadersWriters",
