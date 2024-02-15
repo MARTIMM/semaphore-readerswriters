@@ -1,15 +1,17 @@
 {
-  "authors": [ "Marcel Timmerman" ],
-  "depends": [ ],
-  "test-depends": [ "Test::META" ],
-  "build-depends": [ ],
-  "description": "Semaphore Readers Writers Pattern",
-  "license": "Artistic-2.0",
   "name": "Semaphore::ReadersWriters",
-  "perl": "6",
+  "description": "Semaphore Readers Writers Pattern",
+  "version": "0.2.7",
+  "authors": [ "Marcel Timmerman" ],
+  "author": "zef:martimm",
+  "license": "Artistic-2.0",
+  "perl": "6.d",
+
+  "depends": [ ],
+  "test-depends": [ ],
+  "build-depends": [ ],
   "provides": {
-    "Semaphore::ReadersWriters":        "lib/Semaphore/ReadersWriters.pm6"
+    "Semaphore::ReadersWriters": "lib/Semaphore/ReadersWriters.rakumod"
   },
-  "source-url": "git://github.com/MARTIMM/semaphore-readerswriters.git",
-  "version": "0.2.6.1"
+  "source-url": "git://github.com/MARTIMM/semaphore-readerswriters.git"
 }

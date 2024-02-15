@@ -1,10 +1,12 @@
 # Semaphore Readers Writers Pattern or Light switch
 
+<!--
 [![Build Status](https://travis-ci.org/MARTIMM/semaphore-readerswriters.svg?branch=master)](https://travis-ci.org/MARTIMM/semaphore-readerswriters)  [![License](http://martimm.github.io/label/License-label.svg)](http://www.perlfoundation.org/artistic_license_2_0)
+-->
 
 ## Synopsis
 
-```perl6 {cmd:true}
+```
 use Semaphore::ReadersWriters;
 
 my Semaphore::ReadersWriters $rw .= new;
@@ -37,6 +39,8 @@ The Markdown files in this package uses the atom plugin **Markdown Preview Enhan
 
 See [semantic versioning](http://semver.org/). Please note point 4. on that page: *Major version zero (0.y.z) is for initial development. Anything may change at any time. The public API should not be considered stable.*
 
+* 2024-02-15 0.2.7
+  * Renamed extensions of raku source code files
 * 0.2.6
   * Methods `reader` and `writer` returned a failure object when things are wrong. This poses a problem in some situations. Now it will throw an exception.
 * 0.2.5
